@@ -5,3 +5,5 @@ progress
 matplotlib
 easydict
 scipy
+torchvision
+torch==0.4.1
