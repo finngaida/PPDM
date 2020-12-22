@@ -13,13 +13,19 @@ pip install -r requirements.txt
 
 # need to download some more preprocessed data
 PPDM_DATA_PATH=/media/data/ppdm # set to somewhere convenient
-gdrive --service-account <account.json> download 1WI-gsNLS-t0Kh8TVki1wXqc3y2Ow1f2R --path $PPDM_DATA_PATH
-gdrive --service-account <account.json> download 1b-_sjq1Pe_dVxt5SeFmoadMfiPTPZqpz --path $PPDM_DATA_PATH
-gdrive --service-account <account.json> download 1pl_-ael8wERdUREEnaIfqOV_VF2bEVRT --path $PPDM_DATA_PATH
-gdrive --service-account <account.json> download 1-5bT5ZF8bXriJ-wAvOjJFrBLvZV2-mlV --path $PPDM_DATA_PATH
-# make the link to COCO
-ln -s /media/data/images Datasets/images
-ln -s /media/data/hico Datasets/annotations
+# Preprocessed HICO annotations
+gdrive --service-account <account.json> download 1WI-gsNLS-t0Kh8TVki1wXqc3y2Ow1f2R --path $PPDM_DATA_PATH --recursive
+gdrive --service-account <account.json> download 1le4aziSn_96cN3dIPCYyNsBXJVDD8-CZ --path $PPDM_DATA_PATH
+# pretrained models
+gdrive --service-account <account.json> download 1b-_sjq1Pe_dVxt5SeFmoadMfiPTPZqpz --path $PPDM_DATA_PATH/models
+gdrive --service-account <account.json> download 1pl_-ael8wERdUREEnaIfqOV_VF2bEVRT --path $PPDM_DATA_PATH/models
+gdrive --service-account <account.json> download 1-5bT5ZF8bXriJ-wAvOjJFrBLvZV2-mlV --path $PPDM_DATA_PATH/models
+
+# make a bunch of links
+mkdir Dataset/hico_det
+ln -s /media/data/hico/images Datasets/hico_det/images
+ln -s /media/data/ppdm/hico/annotations Datasets/hico_det/annotations
+ln -s /media/data/ppdm/models models
 
 # need to install some shit for NMS
 cd src/lib/models/networks/DCNv2
