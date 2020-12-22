@@ -24,7 +24,15 @@ ln -s /media/data/hico Datasets/annotations
 # need to install some shit for NMS
 cd src/lib/models/networks/DCNv2
 python build.py
+python build_double.py
 # NOTE: with CUDA installed you can install the real deal via `sh make.sh`
+# another note: if you get an error here like `-fopenmp not supported`, check this: https://stackoverflow.com/a/48746939/1642174
+# basically this means you have to use another clang, by installing first from homebrew and then setting it via the Env Variable
+# brew install llvm
+# export CC=/usr/local/opt/llvm/bin/clang
+# export CXX=/usr/local/opt/llvm/bin/clang++
+# export CXX11=/usr/local/opt/llvm/bin/clang++
+# then python build.py again
 
 # and now we're actually ready to go. Choose your fighter
 cd src
