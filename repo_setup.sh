@@ -3,7 +3,7 @@ echo "WARNING! Don't attempt to actually run this script, it's just to aid in se
 exit 0
 
 # ready to get the code
-git clone https://github.com/finngaida/PPDM.git
+git clone --recursive https://github.com/finngaida/PPDM.git
 cd PPDM
 
 # let's create our environment
@@ -29,17 +29,19 @@ ln -s /media/data/ppdm/models models
 
 # need to install some shit for NMS
 cd src/lib/models/networks/DCNv2
-python build.py
-python build_double.py
-# NOTE: with CUDA installed you can install the real deal via `sh make.sh`
-# another note: if you get an error here like `-fopenmp not supported`, check this: https://stackoverflow.com/a/48746939/1642174
-# basically this means you have to use another clang, by installing first from homebrew and then setting it via the Env Variable
-# brew install llvm
-# export CC=/usr/local/opt/llvm/bin/clang
-# export CXX=/usr/local/opt/llvm/bin/clang++
-# export CXX11=/usr/local/opt/llvm/bin/clang++
-# then python build.py again
+sh make.sh # might need to `brew install ninja` for this
+python setup.py build_ext # might need to `sudo chown -R fga .` for this
+sudo python setup.py install
 
 # and now we're actually ready to go. Choose your fighter
 cd src
-python main.py  hoidet --batch_size 112 --master_batch 7 --lr 4.5e-4 --gpus 0,1,2,3,4,5,6,7  --num_workers 16  --load_model ../models/ctdet_coco_dla_2x.pth --image_dir images/train2015 --dataset hico --exp_id hoidet_hico_dla
+python main.py hoidet \
+    --batch_size 112 \
+    --master_batch 7 \
+    --lr 4.5e-4 \
+    --gpus -1 \
+    --num_workers 16  \
+    --load_model /media/data/PDDM/models/ctdet_coco_dla_2x.pth \
+    --image_dir images/train2015 \
+    --dataset hico \
+    --exp_id hoidet_hico_dla

@@ -7,4 +7,4 @@ matplotlib
 easydict
 scipy
 torchvision
-torch==0.4.1
+torch==1.6.0
