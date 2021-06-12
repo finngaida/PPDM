@@ -29,19 +29,17 @@ ln -s /media/data/ppdm/models models
 
 # need to install some shit for NMS
 cd src/lib/models/networks/DCNv2
-sh make.sh # might need to `brew install ninja` for this
-python setup.py build_ext # might need to `sudo chown -R fga .` for this
-sudo python setup.py install
+pip install -e .
 
 # and now we're actually ready to go. Choose your fighter
 cd src
 python main.py hoidet \
-    --batch_size 112 \
+    --batch_size 2 \
     --master_batch 7 \
-    --lr 4.5e-4 \
     --gpus -1 \
-    --num_workers 16  \
-    --load_model /media/data/PDDM/models/ctdet_coco_dla_2x.pth \
+    --lr 4.5e-4 \
+    --num_workers 0 \
+    --load_model /media/data/ppdm/models/ctdet_coco_dla_2x.pth \
     --image_dir images/train2015 \
     --dataset hico \
     --exp_id hoidet_hico_dla
